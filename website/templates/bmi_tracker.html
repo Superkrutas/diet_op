@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="mb-3">BMI Tracker</h2>
+
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <h3 class="mt-4">Your BMI Records:</h3>
+        <ul class="list-group" style="max-height: 200px; overflow-y: auto;">
+          {% for record in bmi_records %}
+            <li class="list-group-item">
+              {{ record.date }} - BMI: {{ record.calculate_bmi|floatformat:2}}
+            </li>
+          {% empty %}
+            <li class="list-group-item">No BMI records available.</li>
+          {% endfor %}
+        </ul>
+
+        <h3 class="mt-4">Overall Calorie Intake Recommendation:</h3>
+        <div class="alert alert-info">
+          {{ overall_recommendation }}
+        </div>
+        <h3 class="mt-4">Overall category:</h3>
+        <div class="alert alert-info">
+          {{ bmi_category }}
+        </div>
+
+        <!-- Display daily calorie information -->
+        <h3>Daily Calorie Information:</h3>
+        <p>Daily Calories Needed: {{ daily_calories_needed }}</p>
+        <p>Daily Calories Consumed: {{ daily_calories_consumed }}</p>
+        <p>Remaining Calories: {{ remaining_calories }}</p>
+        <!-- Display BMI Chart using Chart.js -->
+<h3 class="mt-4">BMI Chart:</h3>
+<canvas id="bmiChart" width="200" height="100"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  var ctx = document.getElementById('bmiChart').getContext('2d');
+  var dates = {{ dates_json|safe }};
+  var bmiValues = {{ bmi_values_json|safe }};
+
+  var bmiChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: 'BMI Value',
+        data: bmiValues,
+        borderColor: 'blue',
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'BMI Tracker',
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            unit: 'day',
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Date'
+          }
+        }],
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'BMI Value'
+          }
+        }]
+      }
+    }
+  });
+</script>
+        <!-- Display Meal Plan Recommendations -->
+        <h3 class="mt-4">Meal Plan Recommendation:</h3>
+        <div class="alert alert-success">
+          {% if meal_plan_recommendation %}
+            {{ meal_plan_recommendation }}
+          {% else %}
+            No meal plan recommendation available.
+          {% endif %}
+        </div>
+
+      </div>
+    
+    <h2>Meal Plan</h2>
+
+    <h3>Breakfast</h3>
+    <ul>
+      <p>{{ breakfast_recommendation}}</p>
+      <p>Protein: {{ breakfast_recommendation.protein}}</p>
+      <p>Fat: {{ breakfast_recommendation.fat}}</p>
+      <p>Carbohydrates: {{ breakfast_recommendation.carbohydrates}}</p>
+
+    </ul>
+    <h3>Lunch</h3>
+    <ul>
+      <p>{{ lunch_recommendation}}</p>
+      <p>Protein: {{ lunch_recommendation.protein}}</p>
+      <p>Fat: {{ lunch_recommendation.fat}}</p>
+      <p>Carbohydrates: {{ lunch_recommendation.carbohydrates}}</p>
+
+    </ul>
+    <h3>Dinner</h3>
+    <ul>
+      <p>{{ dinner_recommendation}}</p>
+      <p>Protein: {{ dinner_recommendation.protein}}</p>
+      <p>Fat: {{ dinner_recommendation.fat}}</p>
+      <p>Carbohydrates: {{ dinner_recommendation.carbohydrates}}</p>
+
+    </ul>
+  </div>
+{% endblock %}

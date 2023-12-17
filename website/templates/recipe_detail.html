@@ -1,0 +1,26 @@
+<!-- recipe_detail.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <h1 class="display-4">{{ recipe.title }}</h1>
+        <p class="lead">{{ recipe.description }}</p>
+        <div class="mt-4">
+          <h2>Ingredients:</h2>
+          <p>{{ recipe.ingredients|linebreaks }}</p>
+        </div>
+        <div class="mt-4">
+          <h2>Instructions:</h2>
+          <p>{{ recipe.instructions|linebreaks }}</p>
+        </div>
+        <div class="mt-4">
+          <p>Calories: {{ recipe.calories }}, Protein: {{ recipe.protein }}, Carbs: {{ recipe.carbohydrates }}, Fat: {{ recipe.fat }}</p>
+          <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="img-fluid" style="max-width: 300px;">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

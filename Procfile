@@ -1,0 +1,1 @@
+web: gunicorn diet_op.wsgi --log-file -

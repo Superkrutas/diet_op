@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            {% if user.is_authenticated %}
+            <h1>Hello, {{ user.username }}</h1>
+
+            
+
+            <a href="{% url 'recipe_list' %}" class="btn btn-primary">View Recipes</a>
+            <a href="{% url 'bmi_tracker' %}" class="btn btn-primary">BMI Tracker</a>
+            <a href="{% url 'food_intake_tracker' %}" class="btn btn-primary">Calorie Tracker</a>
+
+            {% else %}
+            <h1>Login</h1>
+            <br/>
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

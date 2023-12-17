@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="mt-4">Recipes</h1>
+    <div class="row mt-4">
+      {% for recipe in recipes %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }}</h5>
+              <p class="card-text">{{ recipe.description }}</p>
+              <p class="card-text"><small class="text-muted">Created on {{ recipe.created_at|date:"F j, Y" }}</small></p>
+              <p class="card-text">Meal Type: {{ recipe.get_meal_type_display }}</p>
+              <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary">Details</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
