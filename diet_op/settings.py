@@ -78,15 +78,14 @@ WSGI_APPLICATION = 'diet_op.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dietdb',
-        'USER': 'root',
-        'PASSWORD': '123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': '*dD144EA1a-GE*eD2a-F6AGa4F54G*2E',
+        'HOST': 'viaduct.proxy.rlwy.net',
+        'PORT': '14603',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
