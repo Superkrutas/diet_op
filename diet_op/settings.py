@@ -55,7 +55,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'diet_op.urls'
-
 CORS_ALLOWED_ORIGINS = [
     "https://web-production-6363.up.railway.app",
 ]

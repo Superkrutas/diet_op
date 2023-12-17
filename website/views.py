@@ -5,9 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Avg
 from .forms import SignUpForm, BMIForm, FoodIntakeForm, ProfileForm
 from .models import BMIRecord, FoodIntake, Recipe
-from decimal import Decimal
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+def admin_login(request):
+    # Your view logic goes here
+    return HttpResponse('CSRF protection is disabled for the admin login view.')
 @csrf_exempt
 def home(request):
     # Renders the home page and handles user authentication.
