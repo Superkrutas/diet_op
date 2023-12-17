@@ -7,7 +7,8 @@ from .forms import SignUpForm, BMIForm, FoodIntakeForm, ProfileForm
 from .models import BMIRecord, FoodIntake, Recipe
 from decimal import Decimal
 import json
-
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def home(request):
     # Renders the home page and handles user authentication.
 
@@ -30,7 +31,7 @@ def home(request):
             'user': user,
         }    
     return render(request, 'home.html', context)
-
+@csrf_exempt
 def logout_user(request):
     # Logs out the authenticated user, displays a success message, and redirects to the home page.
     # Calls the Django `logout` function to log out the user associated with the given request.
@@ -39,7 +40,7 @@ def logout_user(request):
     messages.success(request, "You are logged out!")
     # Redirects the user to the home page after successful logout.
     return redirect('home')
-
+@csrf_exempt
 def register_user(request):
     # Handles user registration, processes registration form submissions, and logs in new users.
 
@@ -73,7 +74,7 @@ def register_user(request):
 
     # Renders the registration form page with the user and profile forms.
     return render(request, 'register.html', {'user_form': user_form, 'profile_form': profile_form})
-
+@csrf_exempt
 @login_required
 def bmi_tracker(request):
     # View for handling BMI tracking, displaying recommendations, and providing meal plans.
@@ -204,6 +205,7 @@ def calculate_bmi_category(bmi_value):# Categorize BMI into different weight sta
 # Allows authenticated users to input their daily food intake, providing a form to submit the data.
 # Displays a summary of daily totals for calories, protein, carbohydrates, and fats.
 # Uses charts to visualize the data over time.
+@csrf_exempt
 @login_required
 def food_intake_tracker(request):
     if request.method == 'POST':
